@@ -119,7 +119,7 @@ function Ball(x, y, sizeIndex, dx, dy) {
         } else if (this.color === '#ffff00' || otherBall.color === '#ffff00'){
             // Sárga golyók mozgását nem változtatjuk meg
         }
-        
+
         const overlap = this.radius + otherBall.radius - Math.sqrt((this.x - otherBall.x) ** 2 + (this.y - otherBall.y) ** 2);
         const angle = Math.atan2(otherBall.y - this.y, otherBall.x - this.x);
         this.x -= overlap / 2 * Math.cos(angle);
@@ -128,3 +128,14 @@ function Ball(x, y, sizeIndex, dx, dy) {
         otherBall.y += overlap / 2 * Math.sin(angle);
     };
 }
+
+// Eseménykezelő a kattintásokhoz
+canvas2.addEventListener('click', function (e) {
+    if (previewBall) {
+        const mouseX = e.clientX - canvas2.getBoundingClientRect().left;
+        // A kattintás helyén létrehozzuk a golyót a preview golyó tulajdonságaival
+        balls.push(new Ball(mouseX, canvas2.height - previewY, previewBall.sizeIndex, (Math.random() - 0.5) * 4, 0));
+        // Töröljük a preview golyót
+        previewBall = null;
+    }
+});
