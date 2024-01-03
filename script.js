@@ -87,3 +87,35 @@ function Ball(x, y, sizeIndex, dx, dy) {
         const distance = Math.sqrt((this.x - otherBall.x) ** 2 + (this.y - otherBall.y) ** 2);
         return distance < this.radius + otherBall.radius;
     };
+
+    this.resolveCollision = function (otherBall) {
+        const tempDx = this.dx;
+        const tempDy = this.dy;
+        if (this.color !== '#ffff00' && otherBall.color !== '#ffff00') {
+            // Ugyanolyan szinű golyók egybeolvadása(excluding #ffff00)
+            if (this.color === otherBall.color) {
+                const totalRadius = this.radius + otherBall.radius;
+                const newRadius = Math.sqrt(totalRadius * totalRadius);
+                const nextSizeIndex = (this.sizeIndex + 1) % sizes.length;
+                if (this.sizeIndex < otherBall.sizeIndex) {
+                    this.sizeIndex = nextSizeIndex;
+                    this.radius = sizes[nextSizeIndex] * 10;
+                    this.color = colors[nextSizeIndex];
+                    balls.splice(balls.indexOf(otherBall), 1);
+                    score++; 
+                } else {
+                    otherBall.sizeIndex = nextSizeIndex;
+                    otherBall.radius = sizes[nextSizeIndex] * 10;
+                    otherBall.color = colors[nextSizeIndex];
+                    balls.splice(balls.indexOf(this), 1);
+                    score++; 
+                }
+            } else {
+                this.dx = otherBall.dx;
+                this.dy = otherBall.dy;
+                otherBall.dx = tempDx;
+                otherBall.dy = tempDy;
+            }
+        } else if (this.color === '#ffff00' || otherBall.color === '#ffff00'){
+            // Sárga golyók mozgását nem változtatjuk meg
+        }
