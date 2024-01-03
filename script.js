@@ -139,3 +139,16 @@ canvas2.addEventListener('click', function (e) {
         previewBall = null;
     }
 });
+
+// Eseménykezelő a kurzormozdulatokhoz a preview golyóval
+canvas2.addEventListener('mousemove', function (e) {
+    const mouseX = e.clientX - canvas2.getBoundingClientRect().left;
+    // Megjelenítjük a preview golyót, ha még nincs kattintva
+    if (!previewBall) {
+        const sizeIndex = Math.floor(Math.random() * 2); // Only the first two colors
+        previewBall = new Ball(mouseX, canvas2.height - previewY, sizeIndex, 0, 0); // Fixed y-coordinate
+    } else {
+        // Frissítjük a preview golyó x-koordinátáját a kurzorral
+        previewBall.x = mouseX;
+    }
+});
