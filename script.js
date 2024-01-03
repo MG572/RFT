@@ -119,3 +119,12 @@ function Ball(x, y, sizeIndex, dx, dy) {
         } else if (this.color === '#ffff00' || otherBall.color === '#ffff00'){
             // Sárga golyók mozgását nem változtatjuk meg
         }
+        
+        const overlap = this.radius + otherBall.radius - Math.sqrt((this.x - otherBall.x) ** 2 + (this.y - otherBall.y) ** 2);
+        const angle = Math.atan2(otherBall.y - this.y, otherBall.x - this.x);
+        this.x -= overlap / 2 * Math.cos(angle);
+        this.y -= overlap / 2 * Math.sin(angle);
+        otherBall.x += overlap / 2 * Math.cos(angle);
+        otherBall.y += overlap / 2 * Math.sin(angle);
+    };
+}
