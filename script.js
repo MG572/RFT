@@ -152,3 +152,23 @@ canvas2.addEventListener('mousemove', function (e) {
         previewBall.x = mouseX;
     }
 });
+
+// Animáció
+function animate() {
+    requestAnimationFrame(animate);
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+    // A pontszám megjelenítése
+    drawScore();
+
+    // Kirajzoljuk a preview golyót, ha létezik
+    if (previewBall) {
+        previewBall.draw(ctx2);
+    }
+
+    balls.forEach(ball => {
+        ball.update();
+    });
+}
+
+animate();
