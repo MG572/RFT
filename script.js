@@ -72,7 +72,7 @@ function Ball(x, y, sizeIndex, dx, dy) {
         this.handleCollisions(); // Kollíziókezelés hozzáadása
         this.draw(ctx2);
     };
-    
+
     this.handleCollisions = function () {
         // Ütközés kezelése másik golyóval
         for (let i = 0; i < balls.length; i++) {
@@ -81,4 +81,9 @@ function Ball(x, y, sizeIndex, dx, dy) {
                 this.resolveCollision(otherBall);
             }
         }
+    };
+
+    this.isColliding = function (otherBall) {
+        const distance = Math.sqrt((this.x - otherBall.x) ** 2 + (this.y - otherBall.y) ** 2);
+        return distance < this.radius + otherBall.radius;
     };
