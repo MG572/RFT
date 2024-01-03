@@ -33,3 +33,43 @@ function drawScore() {
 
     ctx1.fillText("Score: " + score, canvas1.width / 2, canvas1.height / 6);
 }
+// Golyó objektum létrehozása
+function Ball(x, y, sizeIndex, dx, dy) {
+    this.x = x;
+    this.y = y;
+    this.sizeIndex = sizeIndex;
+    this.radius = sizes[sizeIndex] * 10;
+    this.color = colors[sizeIndex];
+    this.dx = dx;
+    this.dy = dy;
+
+    this.draw = function (context) {
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        context.fillStyle = this.color;
+        context.fill();
+        context.closePath();
+    };
+
+    this.update = function () {
+        this.x += this.dx;
+        this.y += this.dy;
+
+        // Ütközés ellenőrzése a bal és jobb oldalakkal
+        if (this.x - this.radius < 0 || this.x + this.radius > canvas2.width) {
+            this.dx = -this.dx * bounceStrength; // Bounce off the walls with reduced strength
+        }
+
+        // Ütközés ellenőrzése a felső és alsó oldalakkal
+        if (this.y + this.radius > canvas2.height) {
+            this.y = canvas2.height - this.radius; // Snap to the ground
+            this.dy = -this.dy * bounceStrength; // Bounce off the ground with reduced strength
+        }
+
+        // Gravitációs hatás
+        this.dy += gravity;
+
+        this.handleCollisions(); // Kollíziókezelés hozzáadása
+        this.draw(ctx2);
+    };
+    
