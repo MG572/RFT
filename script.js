@@ -7,3 +7,7 @@ const balls = [];
 const colors = ['#ff0000', '#0000ff', '#00ff00', '#ffff00'];
 const sizes = [1, 2, 3, 4];
 let score = 0;
+
+//Az ideiglenes golyó
+let previewBall = null;
+const previewY = 536;
