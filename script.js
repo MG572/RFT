@@ -11,3 +11,7 @@ let score = 0;
 //Az ideiglenes golyó
 let previewBall = null;
 const previewY = 536;
+
+// Gravitáció
+const gravity = 0.1;
+const bounceStrength = 0.7;
