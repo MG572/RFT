@@ -73,3 +73,12 @@ function Ball(x, y, sizeIndex, dx, dy) {
         this.draw(ctx2);
     };
     
+    this.handleCollisions = function () {
+        // Ütközés kezelése másik golyóval
+        for (let i = 0; i < balls.length; i++) {
+            const otherBall = balls[i];
+            if (otherBall !== this && this.isColliding(otherBall)) {
+                this.resolveCollision(otherBall);
+            }
+        }
+    };
